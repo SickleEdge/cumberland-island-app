@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wildlife Guide - Cumberland Island Visitor Guide</title>
+    <meta name="description" content="Learn about the diverse wildlife of Cumberland Island National Seashore, including wild horses, sea turtles, birds, and alligators.">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="animations.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #2f6b39;
+            --light-green: #e6f4e8;
+            --medium-green: #b8dabe;
+            --dark-green: #1e472a;
+            --accent-gold: #daa520;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link.active {
+            background-color: #065f46;
+            color: white;
+        }
+        .nav-link:hover {
+            background-color: #047857;
+            color: white;
+        }
+        
+        .wildlife-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .wildlife-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .wildlife-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .featured-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent-gold);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .wildlife-info {
+            padding: 1.5rem;
+        }
+        
+        .wildlife-info h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+            color: var(--dark-green);
+        }
+        
+        .wildlife-info p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .fun-fact {
+            background-color: var(--medium-green);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-green-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-green-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <span class="text-xl font-bold">Cumberland Island</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="trails.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Trails</a>
+                        <a href="wildlife.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Wildlife</a>
+                        <a href="visitor-info.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Visitor Info</a>
+                        <a href="emergency.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Emergency</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Disclaimer -->
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+                </svg>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-yellow-800">Important Disclaimer</h3>
+                <div class="mt-2 text-sm text-yellow-700">
+                    <p>This is an unofficial guide to Cumberland Island National Seashore. This website is not affiliated with, authorized by, or connected to the National Park Service or Cumberland Island National Seashore. All information provided is for general reference only.</p>
+                    <p class="mt-2">For official information, please visit the <a href="https://www.nps.gov/cuis/index.htm" target="_blank" rel="noopener noreferrer" class="font-medium underline text-yellow-800 hover:text-yellow-600">official National Park Service website</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero bg-cover bg-center h-96 relative" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/wildlife-hero.jpg');">
+        <div class="hero-content absolute inset-0 flex items-center justify-center text-center text-white p-4">
+            <div>
+                <h2 class="text-4xl font-bold mb-4 text-shadow">Discover Cumberland's Wildlife</h2>
+                <p class="text-xl max-w-3xl mx-auto text-shadow">Explore the diverse ecosystem of Georgia's largest barrier island, home to over 300 species of birds, feral horses, and endangered sea turtles.</p>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="categories mb-8 overflow-x-auto whitespace-nowrap">
+            <button class="category-button active inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">All Wildlife</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Mammals</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Birds</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Reptiles</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Marine Life</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Endangered Species</button>
+        </div>
+
+        <section class="wildlife-spotlight mb-12 bg-white rounded-lg overflow-hidden shadow-lg">
+            <div class="md:flex">
+                <div class="md:w-1/2">
+                    <div class="h-64 md:h-full bg-cover bg-center" style="background-image: url('images/wild-horses.jpg');"></div>
+                </div>
+                <div class="md:w-1/2 p-8">
+                    <h3 class="text-2xl font-bold text-green-900 mb-4">Cumberland Island Wild Horses</h3>
+                    <p class="text-gray-600 mb-6">The feral horses of Cumberland Island are the most iconic residents, with a population of about 150-200 horses. Descendants of domesticated horses brought to the island in the 18th century, they now roam freely across beaches, marshes, and maritime forests.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-2 text-green-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <span>150-200 population</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-green-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                            <span>Island-wide habitat</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-green-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                            </svg>
+                            <span>Best seen at sunrise</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-green-700">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                            <span>Keep 50ft distance</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <h3 class="text-2xl font-bold text-green-900 mb-6">Mammals</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/white-tailed-deer.jpg');"></div>
+                <span class="featured-tag">Featured</span>
+                <div class="wildlife-info">
+                    <h4>White-tailed Deer</h4>
+                    <p>These graceful creatures are common throughout the island, especially in the maritime forest. Dawn and dusk are the best times to spot them.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> During summer, deer's coats turn reddish-brown, while winter coats are more grayish.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/armadillo.jpg');"></div>
+                <div class="wildlife-info">
+                    <h4>Nine-banded Armadillo</h4>
+                    <p>These armored mammals are often spotted digging for insects in the undergrowth. They're relatively new to the island, having arrived in the 1970s.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Armadillos can hold their breath for up to six minutes and cross small streams by walking underwater.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/raccoon.jpg');"></div>
+                <div class="wildlife-info">
+                    <h4>Raccoons</h4>
+                    <p>These clever and adaptable mammals are common throughout Cumberland Island, particularly around campsites and near the shore.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Cumberland Island raccoons have learned to hunt for ghost crabs on the beach at night, showing their remarkable adaptability.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-green-900 mb-6">Birds</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/bald-eagle.jpg');"></div>
+                <div class="wildlife-info">
+                    <h4>Bald Eagle</h4>
+                    <p>Cumberland Island is home to several nesting pairs of America's national bird. Look for them soaring over the beach or perched in tall pines.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Cumberland's eagles build some of the largest nests in the world, with some measuring up to 10 feet across.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/wood-stork.jpg');"></div>
+                <span class="featured-tag">Featured</span>
+                <div class="wildlife-info">
+                    <h4>Wood Stork</h4>
+                    <p>These distinctive wading birds are endangered and can be spotted in the island's marshes and pond areas, especially during low tide.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Wood storks are the only stork species that breed in the United States, with Cumberland Island serving as an important habitat.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/painted-bunting.jpg');"></div>
+                <div class="wildlife-info">
+                    <h4>Painted Bunting</h4>
+                    <p>One of North America's most colorful birds, these vibrant songbirds can be spotted in brushy areas and forest edges during spring and summer.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Male painted buntings are nicknamed "nonpareils" (meaning "without equal") because of their extraordinary coloration.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-green-900 mb-6">Reptiles & Amphibians</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/loggerhead-turtle.jpg');"></div>
+                <span class="featured-tag">Featured</span>
+                <div class="wildlife-info">
+                    <h4>Loggerhead Sea Turtle</h4>
+                    <p>These threatened sea turtles nest on Cumberland's beaches from May to August. Hatchlings emerge at night and make their way to the sea.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Female loggerheads return to the same beach where they were born to lay their eggs, navigating across thousands of miles of ocean.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/alligator.jpg');"></div>
+                <div class="wildlife-info">
+                    <h4>American Alligator</h4>
+                    <p>These impressive reptiles can be found in Cumberland's freshwater ponds and occasionally in brackish marshes. They're typically shy around humans.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Alligators have been around for 200 million years, surviving the extinction that killed the dinosaurs.
+                    </div>
+                </div>
+            </div>
+
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/rattlesnake.jpg');"></div>
+                <div class="wildlife-info">
+                    <h4>Eastern Diamondback Rattlesnake</h4>
+                    <p>The largest venomous snake in North America lives in Cumberland's pine forests. They're rarely seen and prefer to avoid humans.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Eastern diamondbacks can detect temperature changes as small as 0.003°C through special heat-sensing pits near their eyes.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="conservation bg-white rounded-lg shadow-lg p-8 mb-12">
+            <h3 class="text-2xl font-bold text-green-900 mb-4">Conservation & Wildlife Safety</h3>
+            <p class="text-gray-600 mb-6">Cumberland Island National Seashore is committed to protecting its diverse wildlife. As a visitor, you play a crucial role in conservation efforts and ensuring these animals remain wild and healthy.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="border-l-4 border-green-700 pl-4">
+                    <h4 class="font-semibold text-green-900 mb-2">Keep Wildlife Wild</h4>
+                    <p class="text-gray-600">Never feed or approach wild animals. Feeding wildlife damages their natural behaviors and can be dangerous.</p>
+                </div>
+                
+                <div class="border-l-4 border-green-700 pl-4">
+                    <h4 class="font-semibold text-green-900 mb-2">Maintain Safe Distances</h4>
+                    <p class="text-gray-600">Stay at least 50 feet away from horses and deer, and 100 feet from alligators. Use binoculars for closer views.</p>
+                </div>
+                
+                <div class="border-l-4 border-green-700 pl-4">
+                    <h4 class="font-semibold text-green-900 mb-2">Protect Sea Turtle Nests</h4>
+                    <p class="text-gray-600">Stay away from marked sea turtle nests. At night, avoid using flashlights on the beach during nesting season.</p>
+                </div>
+                
+                <div class="border-l-4 border-green-700 pl-4">
+                    <h4 class="font-semibold text-green-900 mb-2">Pack In, Pack Out</h4>
+                    <p class="text-gray-600">Take all trash with you when you leave. Even biodegradable items can take years to decompose and attract wildlife.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-green-800 text-white mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="text-center text-green-200">
+                <p>© <script>document.write(new Date().getFullYear())</script> Cumberland Island Visitor Guide</p>
+                <p class="mt-2 text-sm">This is an unofficial guide. Not affiliated with the National Park Service.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add active class to current navigation link
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Category buttons
+            const categoryButtons = document.querySelectorAll('.category-button');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Add fade-in animation for cards when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.wildlife-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html> 
