@@ -6,7 +6,19 @@
     <title>Visitor Information - Cumberland Island Visitor Guide</title>
     <meta name="description" content="Essential information for planning your visit to Cumberland Island National Seashore, including transportation, facilities, and island rules.">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="animations.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-green: #2f6b39;
+            --light-green: #e6f4e8;
+            --medium-green: #b8dabe;
+            --dark-green: #1e472a;
+            --accent-gold: #daa520;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
         .nav-link.active {
             background-color: #065f46;
             color: white;
@@ -15,6 +27,12 @@
             background-color: #047857;
             color: white;
         }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Info card styles */
     </style>
 </head>
 <body class="bg-green-50 min-h-screen">
@@ -41,7 +59,7 @@
     </nav>
 
     <!-- Disclaimer -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto">
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto animate-fade-in">
         <div class="flex">
             <div class="flex-shrink-0">
                 <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -58,16 +76,26 @@
         </div>
     </div>
 
+    <!-- Hero Section -->
+    <section class="hero bg-cover bg-center h-96 relative animate-fade-in" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/visitor-info-hero.jpg');">
+        <div class="hero-content absolute inset-0 flex items-center justify-center text-center text-white p-4">
+            <div>
+                <h1 class="text-4xl font-bold mb-4 text-shadow animate-slide-up">Visitor Information</h1>
+                <p class="text-xl max-w-3xl mx-auto text-shadow animate-slide-up stagger-1">Essential information for planning your visit to Cumberland Island National Seashore.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mt-8">
-            <h1 class="text-3xl font-bold text-green-900 mb-4">Visitor Information</h1>
-            <p class="text-lg text-green-800 mb-8">Essential information to help you plan your visit to Cumberland Island National Seashore.</p>
+        <div class="mt-8 bg-green-50 rounded-lg p-6 shadow-md">
+            <h1 class="text-3xl font-bold text-green-900 mb-4 animate-slide-up">Visitor Information</h1>
+            <p class="text-lg text-green-800 mb-8 animate-slide-up stagger-1">Essential information for planning your visit to Cumberland Island National Seashore.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <!-- Getting There -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="bg-green-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                 <h2 class="text-2xl font-semibold text-green-900 mb-4">Getting There</h2>
                 <ul class="space-y-2">
                     <li class="flex items-start gap-2 text-green-700">
@@ -90,7 +118,7 @@
             </div>
 
             <!-- What to Bring -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="bg-green-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                 <h2 class="text-2xl font-semibold text-green-900 mb-4">What to Bring</h2>
                 <ul class="space-y-2">
                     <li class="flex items-start gap-2 text-green-700">
@@ -129,7 +157,7 @@
             </div>
 
             <!-- Island Rules -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="bg-green-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                 <h2 class="text-2xl font-semibold text-green-900 mb-4">Island Rules</h2>
                 <ul class="space-y-2">
                     <li class="flex items-start gap-2 text-green-700">
@@ -168,7 +196,7 @@
             </div>
 
             <!-- Facilities -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+            <div class="bg-green-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
                 <h2 class="text-2xl font-semibold text-green-900 mb-4">Facilities</h2>
                 <ul class="space-y-2">
                     <li class="flex items-start gap-2 text-green-700">

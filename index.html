@@ -9,6 +9,17 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="animations.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-green: #2f6b39;
+            --light-green: #e6f4e8;
+            --medium-green: #b8dabe;
+            --dark-green: #1e472a;
+            --accent-gold: #daa520;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
         .nav-link.active {
             background-color: #065f46;
             color: white;
@@ -17,13 +28,19 @@
             background-color: #047857;
             color: white;
         }
+        
         .hero-section {
-            background-image: url('images/background.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/background.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             min-height: 600px;
         }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
         /* Modal styles */
         .modal {
             display: none;
@@ -81,38 +98,31 @@
         }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-green-50 min-h-screen">
     <!-- Navigation -->
-    <nav class="bg-green-800 text-white p-4">
-        <div class="container mx-auto flex justify-between items-center animate-fade-in">
-            <h1 class="text-2xl font-bold">Cumberland Island Guide</h1>
-            <div class="space-x-4">
-                <a href="index.html" class="nav-link active">Home</a>
-                <a href="trails.html" class="nav-link">Trails</a>
-                <a href="wildlife.html" class="nav-link">Wildlife</a>
-                <a href="visitor-info.html" class="nav-link">Visitor Info</a>
-                <a href="emergency.html" class="nav-link">Emergency</a>
+    <nav class="bg-green-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <span class="text-xl font-bold">Cumberland Island</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="trails.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Trails</a>
+                        <a href="wildlife.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Wildlife</a>
+                        <a href="visitor-info.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Visitor Info</a>
+                        <a href="emergency.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Emergency</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden hero-section">
-        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32">
-            <div class="text-center animate-fade-in">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6 drop-shadow-lg">Discover Cumberland Island</h1>
-                <p class="text-xl text-white max-w-3xl mx-auto mb-8 drop-shadow-lg">Georgia's largest barrier island, where pristine beaches meet maritime forests and wild horses roam free.</p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="trails.html" class="bg-white text-green-800 px-6 py-3 rounded-md font-medium hover:bg-green-50 transition-colors card-hover">Explore Trails</a>
-                    <a href="wildlife.html" class="bg-green-700 text-white px-6 py-3 rounded-md font-medium hover:bg-green-600 transition-colors card-hover">Meet the Wildlife</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Disclaimer -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto animate-fade-in">
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto">
         <div class="flex">
             <div class="flex-shrink-0">
                 <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -128,6 +138,16 @@
             </div>
         </div>
     </div>
+
+    <!-- Hero Section -->
+    <section class="hero bg-cover bg-center h-96 relative" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/background.jpg');">
+        <div class="hero-content absolute inset-0 flex items-center justify-center text-center text-white p-4">
+            <div>
+                <h1 class="text-4xl font-bold mb-4 text-shadow">Welcome to Cumberland Island</h1>
+                <p class="text-xl max-w-3xl mx-auto text-shadow">Discover Georgia's largest and most pristine barrier island, where pristine beaches meet maritime forests and wild horses roam free.</p>
+            </div>
+        </div>
+    </section>
 
     <!-- Image Modal -->
     <div id="imageModal" class="modal">

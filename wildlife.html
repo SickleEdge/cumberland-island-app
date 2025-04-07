@@ -143,15 +143,15 @@
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="categories mb-8 overflow-x-auto whitespace-nowrap">
-            <button class="category-button active inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">All Wildlife</button>
-            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Mammals</button>
-            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Birds</button>
-            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Reptiles</button>
-            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Marine Life</button>
-            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors">Endangered Species</button>
+            <button class="category-button active inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors" onclick="scrollToSection('all')">All Wildlife</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors" onclick="scrollToSection('mammals')">Mammals</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors" onclick="scrollToSection('birds')">Birds</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors" onclick="scrollToSection('reptiles')">Reptiles</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors" onclick="scrollToSection('marine')">Marine Life</button>
+            <button class="category-button inline-block px-6 py-2 mr-4 bg-white border-2 border-green-700 text-green-700 rounded-full font-semibold hover:bg-green-700 hover:text-white transition-colors" onclick="scrollToSection('endangered')">Endangered Species</button>
         </div>
 
-        <section class="wildlife-spotlight mb-12 bg-white rounded-lg overflow-hidden shadow-lg">
+        <section id="all" class="wildlife-spotlight mb-12 bg-white rounded-lg overflow-hidden shadow-lg">
             <div class="md:flex">
                 <div class="md:w-1/2">
                     <div class="h-64 md:h-full bg-cover bg-center" style="background-image: url('images/wild-horses.jpg');"></div>
@@ -193,7 +193,7 @@
             </div>
         </section>
 
-        <h3 class="text-2xl font-bold text-green-900 mb-6">Mammals</h3>
+        <h3 id="mammals" class="text-2xl font-bold text-green-900 mb-6">Mammals</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             <div class="wildlife-card">
                 <div class="wildlife-image" style="background-image: url('images/white-tailed-deer.jpg');"></div>
@@ -230,7 +230,7 @@
             </div>
         </div>
 
-        <h3 class="text-2xl font-bold text-green-900 mb-6">Birds</h3>
+        <h3 id="birds" class="text-2xl font-bold text-green-900 mb-6">Birds</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             <div class="wildlife-card">
                 <div class="wildlife-image" style="background-image: url('images/bald-eagle.jpg');"></div>
@@ -267,7 +267,7 @@
             </div>
         </div>
 
-        <h3 class="text-2xl font-bold text-green-900 mb-6">Reptiles & Amphibians</h3>
+        <h3 id="reptiles" class="text-2xl font-bold text-green-900 mb-6">Reptiles & Amphibians</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             <div class="wildlife-card">
                 <div class="wildlife-image" style="background-image: url('images/loggerhead-turtle.jpg');"></div>
@@ -299,6 +299,36 @@
                     <p>The largest venomous snake in North America lives in Cumberland's pine forests. They're rarely seen and prefer to avoid humans.</p>
                     <div class="fun-fact">
                         <strong>Fun Fact:</strong> Eastern diamondbacks can detect temperature changes as small as 0.003°C through special heat-sensing pits near their eyes.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 id="marine" class="text-2xl font-bold text-green-900 mb-6">Marine Life</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/loggerhead-turtle.jpg');"></div>
+                <span class="featured-tag">Featured</span>
+                <div class="wildlife-info">
+                    <h4>Loggerhead Sea Turtle</h4>
+                    <p>These threatened sea turtles nest on Cumberland's beaches from May to August. Hatchlings emerge at night and make their way to the sea.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Female loggerheads return to the same beach where they were born to lay their eggs, navigating across thousands of miles of ocean.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3 id="endangered" class="text-2xl font-bold text-green-900 mb-6">Endangered Species</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="wildlife-card">
+                <div class="wildlife-image" style="background-image: url('images/wood-stork.jpg');"></div>
+                <span class="featured-tag">Featured</span>
+                <div class="wildlife-info">
+                    <h4>Wood Stork</h4>
+                    <p>These distinctive wading birds are endangered and can be spotted in the island's marshes and pond areas, especially during low tide.</p>
+                    <div class="fun-fact">
+                        <strong>Fun Fact:</strong> Wood storks are the only stork species that breed in the United States, with Cumberland Island serving as an important habitat.
                     </div>
                 </div>
             </div>
@@ -376,6 +406,17 @@
                 observer.observe(card);
             });
         });
+
+        // Simple scroll function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        }
     </script>
 </body>
 </html> 

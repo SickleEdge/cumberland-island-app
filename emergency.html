@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emergency Information - Cumberland Island Visitor Guide</title>
-    <meta name="description" content="Important emergency information and safety guidelines for visitors to Cumberland Island National Seashore.">
+    <meta name="description" content="Important emergency information for visitors to Cumberland Island National Seashore, including contacts, first aid, weather emergencies, and wildlife encounters.">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="animations.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-green: #2f6b39;
+            --light-green: #e6f4e8;
+            --medium-green: #b8dabe;
+            --dark-green: #1e472a;
+            --accent-gold: #daa520;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
         .nav-link.active {
             background-color: #065f46;
             color: white;
@@ -14,6 +26,21 @@
         .nav-link:hover {
             background-color: #047857;
             color: white;
+        }
+        
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+        }
+        .card.active {
+            border-color: #059669;
+            border-width: 2px;
         }
     </style>
 </head>
@@ -41,7 +68,7 @@
     </nav>
 
     <!-- Disclaimer -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto">
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto animate-fade-in">
         <div class="flex">
             <div class="flex-shrink-0">
                 <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -58,174 +85,337 @@
         </div>
     </div>
 
+    <!-- Hero Section -->
+    <section class="hero bg-cover bg-center h-96 relative animate-fade-in" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/emergency-hero.jpg');">
+        <div class="hero-content absolute inset-0 flex items-center justify-center text-center text-white p-4">
+            <div>
+                <h1 class="text-4xl font-bold mb-4 text-shadow animate-slide-up">Emergency Information</h1>
+                <p class="text-xl max-w-3xl mx-auto text-shadow animate-slide-up stagger-1">Important contacts and safety information for your visit to Cumberland Island National Seashore.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mt-8">
-            <h1 class="text-3xl font-bold text-green-900 mb-4">Emergency Information</h1>
-            <p class="text-lg text-green-800 mb-8">Important safety information and emergency contacts for your visit to Cumberland Island.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Emergency Contacts -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <h2 class="text-2xl font-semibold text-green-900 mb-4">Emergency Contacts</h2>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        <div>
-                            <strong>Park Rangers:</strong> (912) 882-4336
-                            <p class="text-sm mt-1">Available during park hours</p>
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        <div>
-                            <strong>Emergency Services:</strong> 911
-                            <p class="text-sm mt-1">For life-threatening emergencies</p>
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        <div>
-                            <strong>Coast Guard:</strong> (912) 882-4336
-                            <p class="text-sm mt-1">For water-related emergencies</p>
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        <div>
-                            <strong>Wildlife Emergency:</strong> (912) 882-4336
-                            <p class="text-sm mt-1">For injured or distressed wildlife</p>
-                        </div>
-                    </li>
-                </ul>
+    <main class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Emergency Contacts Section -->
+        <section class="mb-16 animate-slide-up">
+            <div class="flex items-center mb-6">
+                <svg class="h-6 w-6 mr-3 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                <h2 class="text-2xl md:text-3xl font-bold">Emergency Contacts</h2>
             </div>
+            <div class="border-t border-gray-200 mb-8"></div>
 
-            <!-- First Aid Information -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <h2 class="text-2xl font-semibold text-green-900 mb-4">First Aid Information</h2>
-                <ul class="space-y-2">
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Always carry a first aid kit
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Know basic first aid procedures
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Stay hydrated and protect from sun exposure
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Be aware of heat exhaustion symptoms
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Know how to treat insect bites and stings
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Keep any wounds clean and covered
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Weather Emergencies -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <h2 class="text-2xl font-semibold text-green-900 mb-4">Weather Emergencies</h2>
-                <ul class="space-y-2">
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Check weather forecasts before your visit
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Be prepared for sudden weather changes
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Seek shelter during thunderstorms
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Avoid beach areas during high tide
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Be aware of hurricane season (June-November)
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Wildlife Encounters -->
-            <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                <h2 class="text-2xl font-semibold text-green-900 mb-4">Wildlife Encounters</h2>
-                <ul class="space-y-2">
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Maintain safe distance from all wildlife
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Do not feed or approach animals
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Be aware of alligator presence near water
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Watch for snakes on trails
-                    </li>
-                    <li class="flex items-start gap-2 text-green-700">
-                        <span class="text-green-600">•</span>
-                        Report injured or distressed wildlife
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="mt-12 bg-red-50 border-l-4 border-red-400 p-4">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
-                    </svg>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card border-l-4 border-l-emerald-600 shadow-md hover:shadow-lg transition-shadow bg-green-50 rounded-lg">
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2">Park Rangers</h3>
+                        <p class="text-2xl font-semibold text-emerald-700 mb-1">(912) 882-4336</p>
+                        <p class="text-sm text-gray-500">Available during park hours</p>
+                    </div>
                 </div>
-                <div class="ml-3">
-                    <h3 class="text-sm font-medium text-red-800">Emergency Preparedness Tips</h3>
-                    <div class="mt-2 text-sm text-red-700">
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Always carry identification and emergency contact information</li>
-                            <li>Know your location on the island</li>
-                            <li>Stay with your group</li>
-                            <li>Carry a whistle for signaling</li>
-                            <li>Have a plan for meeting points</li>
-                            <li>Keep your phone charged (though service may be limited)</li>
-                            <li>Know the ferry schedule and last departure time</li>
+
+                <div class="card border-l-4 border-l-red-600 shadow-md hover:shadow-lg transition-shadow bg-green-50 rounded-lg">
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2">Emergency Services</h3>
+                        <p class="text-2xl font-semibold text-red-700 mb-1">911</p>
+                        <p class="text-sm text-gray-500">For life-threatening emergencies</p>
+                    </div>
+                </div>
+
+                <div class="card border-l-4 border-l-blue-600 shadow-md hover:shadow-lg transition-shadow bg-green-50 rounded-lg">
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2">Coast Guard</h3>
+                        <p class="text-2xl font-semibold text-blue-700 mb-1">(912) 882-4336</p>
+                        <p class="text-sm text-gray-500">For water-related emergencies</p>
+                    </div>
+                </div>
+
+                <div class="card border-l-4 border-l-amber-600 shadow-md hover:shadow-lg transition-shadow bg-green-50 rounded-lg">
+                    <div class="p-6">
+                        <h3 class="font-bold text-lg mb-2">Wildlife Emergency</h3>
+                        <p class="text-2xl font-semibold text-amber-700 mb-1">(912) 882-4336</p>
+                        <p class="text-sm text-gray-500">For injured or distressed wildlife</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- First Aid Section -->
+        <section class="mb-16 animate-slide-up stagger-1">
+            <div class="flex items-center mb-6">
+                <svg class="h-6 w-6 mr-3 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+                <h2 class="text-2xl md:text-3xl font-bold">First Aid Information</h2>
+            </div>
+            <div class="border-t border-gray-200 mb-8"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card shadow-md hover:shadow-lg transition-shadow bg-green-50 rounded-lg">
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-emerald-700 font-semibold">•</span>
+                                </div>
+                                <p>Always carry a first aid kit</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-emerald-700 font-semibold">•</span>
+                                </div>
+                                <p>Know basic first aid procedures</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-emerald-700 font-semibold">•</span>
+                                </div>
+                                <p>Stay hydrated and protect from sun exposure</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card shadow-md hover:shadow-lg transition-shadow bg-green-50 rounded-lg">
+                    <div class="p-6">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-emerald-700 font-semibold">•</span>
+                                </div>
+                                <p>Be aware of heat exhaustion symptoms</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-emerald-700 font-semibold">•</span>
+                                </div>
+                                <p>Know how to treat insect bites and stings</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-emerald-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-emerald-700 font-semibold">•</span>
+                                </div>
+                                <p>Keep any wounds clean and covered</p>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="mt-8 bg-green-100 rounded-lg p-6">
-            <h2 class="text-xl font-semibold text-green-900 mb-4">Need More Information?</h2>
-            <p class="text-green-800 mb-4">For the most up-to-date emergency information and procedures, please contact the park directly or visit the official National Park Service website.</p>
-            <div class="flex flex-col sm:flex-row gap-4">
-                <a href="https://www.nps.gov/cuis/index.htm" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-green-600 hover:bg-green-700">Official NPS Website</a>
-                <a href="tel:9128824336" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-green-700 bg-green-100 hover:bg-green-200">Call Park Office: (912) 882-4336</a>
+        <!-- Weather Emergencies Section -->
+        <section class="mb-16 animate-slide-up stagger-2">
+            <div class="flex items-center mb-6">
+                <svg class="h-6 w-6 mr-3 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                </svg>
+                <h2 class="text-2xl md:text-3xl font-bold">Weather Emergencies</h2>
             </div>
-        </div>
+            <div class="border-t border-gray-200 mb-8"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-blue-50 to-green-50 rounded-lg">
+                    <div class="p-6">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                                <svg class="h-6 w-6 text-blue-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Before Your Visit</h3>
+                            <p>Check weather forecasts before your visit and be prepared for sudden weather changes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-amber-50 to-green-50 rounded-lg">
+                    <div class="p-6">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="h-12 w-12 rounded-full bg-amber-100 flex items-center justify-center mb-4">
+                                <svg class="h-6 w-6 text-amber-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">During Storms</h3>
+                            <p>Seek shelter during thunderstorms and avoid beach areas during high tide</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-red-50 to-green-50 rounded-lg">
+                    <div class="p-6">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="h-12 w-12 rounded-full bg-red-100 flex items-center justify-center mb-4">
+                                <svg class="h-6 w-6 text-red-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h3 class="font-bold text-lg mb-2">Hurricane Season</h3>
+                            <p>Be aware of hurricane season (June-November) and monitor forecasts closely</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wildlife Encounters Section -->
+        <section class="mb-16 animate-slide-up stagger-3">
+            <div class="flex items-center mb-6">
+                <svg class="h-6 w-6 mr-3 text-amber-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+                <h2 class="text-2xl md:text-3xl font-bold">Wildlife Encounters</h2>
+            </div>
+            <div class="border-t border-gray-200 mb-8"></div>
+
+            <div class="bg-amber-50 rounded-xl p-6 md:p-8 shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-amber-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-amber-700 font-semibold">•</span>
+                                </div>
+                                <p>Maintain safe distance from all wildlife</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-amber-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-amber-700 font-semibold">•</span>
+                                </div>
+                                <p>Do not feed or approach animals</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-amber-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-amber-700 font-semibold">•</span>
+                                </div>
+                                <p>Be aware of alligator presence near water</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-amber-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-amber-700 font-semibold">•</span>
+                                </div>
+                                <p>Watch for snakes on trails</p>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="h-6 w-6 rounded-full bg-amber-100 flex items-center justify-center mr-3 mt-0.5 flex-shrink-0">
+                                    <span class="text-amber-700 font-semibold">•</span>
+                                </div>
+                                <p>Report injured or distressed wildlife</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Preparedness Tips Section -->
+        <section class="mb-16 animate-slide-up stagger-4">
+            <div class="flex items-center mb-6">
+                <svg class="h-6 w-6 mr-3 text-orange-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <h2 class="text-2xl md:text-3xl font-bold">Emergency Preparedness Tips</h2>
+            </div>
+            <div class="border-t border-gray-200 mb-8"></div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 mr-3 text-orange-600 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p>Always carry identification and emergency contact information</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 mr-3 text-orange-600 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p>Know your location on the island</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 mr-3 text-orange-600 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <p>Stay with your group</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 mr-3 text-orange-600 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <p>Carry a whistle for signaling</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 mr-3 text-orange-600 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <p>Have a plan for meeting points</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 mr-3 text-orange-600 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    <p>Keep your phone charged (though service may be limited)</p>
+                </div>
+                <div class="flex items-start">
+                    <svg class="h-5 w-5 mr-3 text-orange-600 mt-0.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p>Know the ferry schedule and last departure time</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Need More Information Section -->
+        <section class="animate-slide-up stagger-5">
+            <div class="bg-green-50 rounded-xl p-8 shadow-md">
+                <h2 class="text-2xl font-bold mb-4">Need More Information?</h2>
+                <p class="mb-6">
+                    For the most up-to-date emergency information and procedures, please contact the park directly or visit
+                    the official National Park Service website.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://www.nps.gov/cuis/index.htm" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-md transition-colors">
+                        <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Official NPS Website
+                    </a>
+                    <a href="tel:9128824336" class="inline-flex items-center justify-center px-4 py-2 border border-emerald-700 text-emerald-700 hover:bg-emerald-50 rounded-md transition-colors">
+                        <svg class="h-4 w-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        Call Park Office: (912) 882-4336
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- Footer Banner -->
+    <div class="bg-emerald-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-xl font-bold mb-2">Stay Safe, Stay Prepared</h3>
+            <p class="max-w-2xl mx-auto">
+                Cumberland Island's natural beauty comes with responsibilities. Being prepared ensures your adventure
+                remains memorable for all the right reasons.
+            </p>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-green-800 text-white mt-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center text-green-200">
-                <p>© <script>document.write(new Date().getFullYear())</script> Cumberland Island Visitor Guide</p>
+                <p>© <script>document.write(new Date().getFullYear())</script> Cumberland Island Visitor Guide by Emerson Meade</p>
                 <p class="mt-2 text-sm">This is an unofficial guide. Not affiliated with the National Park Service.</p>
             </div>
         </div>

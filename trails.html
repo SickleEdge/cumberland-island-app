@@ -3,11 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trail Guide - Cumberland Island Visitor Guide</title>
-    <meta name="description" content="Explore the beautiful trails of Cumberland Island National Seashore, including Dungeness Roadways, River Trail, Nightingale Trail, and more.">
+    <title>Cumberland Island Trails - Cumberland Island Visitor Guide</title>
+    <meta name="description" content="Explore the diverse trails of Cumberland Island National Seashore. From historic ruins to pristine beaches, discover the perfect hiking experience.">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
     <link href="animations.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-green: #2f6b39;
+            --light-green: #e6f4e8;
+            --medium-green: #b8dabe;
+            --dark-green: #1e472a;
+            --accent-gold: #daa520;
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
         .nav-link.active {
             background-color: #065f46;
             color: white;
@@ -16,93 +30,70 @@
             background-color: #047857;
             color: white;
         }
-        .trail-card {
-            transition: all 0.3s ease;
+        
+        .map-container {
+            height: 600px;
+            width: 100%;
+            position: relative;
         }
-        .trail-card:hover {
-            transform: translateY(-2px);
+        #trailMap {
+            height: 100%;
+            width: 100%;
         }
-        .trail-card.active {
-            border-color: #059669;
-            border-width: 2px;
-        }
-        /* Modal styles */
-        .modal {
-            display: none;
+        .fullscreen-map {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             z-index: 1000;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
         }
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90vh;
-        }
-        .modal-image {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-            background: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-        }
-        .modal-close {
+        .map-overlay {
             position: absolute;
-            top: -2rem;
-            right: -2rem;
-            background-color: white;
-            color: #065f46;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.5rem;
-            transition: all 0.2s;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 5px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        .modal-close:hover {
-            background-color: #065f46;
-            color: white;
+        .trail-card {
+            transition: transform 0.3s ease;
         }
-        .clickable-image {
-            cursor: pointer;
-            transition: transform 0.2s;
+        .trail-card:hover {
+            transform: translateY(-5px);
         }
-        .clickable-image:hover {
-            transform: scale(1.02);
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body class="bg-green-50 min-h-screen">
     <!-- Navigation -->
-    <nav class="bg-green-800 text-white p-4">
-        <div class="container mx-auto flex justify-between items-center animate-fade-in">
-            <h1 class="text-2xl font-bold">Cumberland Island Guide</h1>
-            <div class="space-x-4">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="trails.html" class="nav-link active">Trails</a>
-                <a href="wildlife.html" class="nav-link">Wildlife</a>
-                <a href="visitor-info.html" class="nav-link">Visitor Info</a>
-                <a href="emergency.html" class="nav-link">Emergency</a>
+    <nav class="bg-green-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <span class="text-xl font-bold">Cumberland Island</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="trails.html" class="nav-link active px-3 py-2 rounded-md text-sm font-medium">Trails</a>
+                        <a href="wildlife.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Wildlife</a>
+                        <a href="visitor-info.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Visitor Info</a>
+                        <a href="emergency.html" class="nav-link px-3 py-2 rounded-md text-sm font-medium">Emergency</a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Disclaimer -->
-    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto">
+    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 my-4 max-w-7xl mx-auto animate-fade-in">
         <div class="flex">
             <div class="flex-shrink-0">
                 <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
@@ -119,480 +110,237 @@
         </div>
     </div>
 
-    <!-- Image Modal -->
-    <div id="imageModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-close" onclick="closeModal()">&times;</div>
-            <img id="modalImage" src="" alt="" class="modal-image">
+    <!-- Hero Section -->
+    <section class="hero bg-cover bg-center h-96 relative animate-fade-in" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/hero-bg.jpg');">
+        <div class="hero-content absolute inset-0 flex items-center justify-center text-center text-white p-4">
+            <div>
+                <h1 class="text-4xl font-bold mb-4 text-shadow animate-slide-up">Explore Cumberland's Trails</h1>
+                <p class="text-xl max-w-3xl mx-auto text-shadow animate-slide-up stagger-1">Discover the diverse landscapes and rich history of Cumberland Island through our extensive trail network.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Trail Map -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="map-container bg-white rounded-lg shadow-lg overflow-hidden">
+            <div id="trailMap"></div>
+            <div class="map-overlay">
+                <button id="fullscreenBtn" class="bg-white px-4 py-2 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Fullscreen
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="mt-8">
-            <h1 class="text-3xl font-bold text-green-900 mb-4">Trail Guide</h1>
-            <p class="text-lg text-green-800 mb-8">Cumberland Island National Seashore offers over 50 miles of diverse hiking trails and roads that traverse maritime forests, interior wetlands, historic districts, marsh ecosystems, and pristine beaches.</p>
-        </div>
-
-        <!-- Trail Map -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8 animate-slide-up">
-            <h2 class="text-xl font-semibold text-green-900 mb-4">Trail Map</h2>
-            <div class="relative">
-                <img src="images/Cumberland-Island-National-Seashore-Map-scaled.jpg" 
-                     alt="Cumberland Island National Seashore Trail Map" 
-                     class="rounded-lg w-full h-auto clickable-image" 
-                     onclick="openModal(this.src, this.alt)">
-                <div class="absolute bottom-0 right-0 bg-black bg-opacity-50 text-white text-xs p-2 rounded-tl-lg">
-                    Map Source: National Park Service
-                </div>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Trail Categories -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Historic Trails -->
+            <div class="bg-green-50 rounded-lg shadow-md p-6 trail-card">
+                <h2 class="text-2xl font-bold text-green-900 mb-4">Historic Trails</h2>
+                <p class="text-green-700 mb-4">Explore the island's rich history through these carefully maintained trails.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Dungeness Historic District
+                    </li>
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Plum Orchard Mansion
+                    </li>
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        First African Baptist Church
+                    </li>
+                </ul>
             </div>
-            <p class="mt-4 text-sm text-gray-600">For an interactive map and additional details, visit the <a href="https://www.nps.gov/cuis/planyourvisit/maps.htm" target="_blank" rel="noopener noreferrer" class="text-green-600 hover:text-green-800">National Park Service website</a>.</p>
+
+            <!-- Nature Trails -->
+            <div class="bg-green-50 rounded-lg shadow-md p-6 trail-card">
+                <h2 class="text-2xl font-bold text-green-900 mb-4">Nature Trails</h2>
+                <p class="text-green-700 mb-4">Immerse yourself in the island's diverse ecosystems and wildlife.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        River Trail
+                    </li>
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Nightingale Trail
+                    </li>
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Parallel Trail
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Beach Access -->
+            <div class="bg-green-50 rounded-lg shadow-md p-6 trail-card">
+                <h2 class="text-2xl font-bold text-green-900 mb-4">Beach Access</h2>
+                <p class="text-green-700 mb-4">Experience the pristine beaches and coastal beauty of Cumberland Island.</p>
+                <ul class="space-y-2">
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Sea Camp Beach
+                    </li>
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Stafford Beach
+                    </li>
+                    <li class="flex items-center text-green-700">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                        Brickhill Bluff
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <!-- Southern End Trails -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-green-900 mb-6">Popular Trails on the Southern End</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Dungeness Roadways -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <h3 class="text-xl font-semibold text-green-900">Dungeness Roadways</h3>
-                        <div class="flex items-center gap-4 mt-2 md:mt-0">
-                            <span class="text-green-700">Difficulty: Easy</span>
+        <!-- Trail Details -->
+        <div class="mt-12 space-y-8">
+            <!-- Dungeness Historic District -->
+            <div class="bg-green-50 rounded-lg shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:flex-shrink-0">
+                        <img class="h-48 w-full object-cover md:w-48" src="images/dungeness.jpg" alt="Dungeness Historic District">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-green-900">Dungeness Historic District</h3>
+                        <p class="mt-2 text-green-700">Explore the ruins of the Carnegie family's winter home and surrounding historic structures.</p>
+                        <div class="mt-4">
+                            <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-800 mr-2">Historic</span>
+                            <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-800">Easy</span>
                         </div>
                     </div>
-                    <p class="text-green-800 mb-6">A self-guided walk through the Dungeness Historic District, offering views of the historic ruins and surrounding landscape.</p>
-                    <div>
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Trail Highlights</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Historic Dungeness ruins
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Oak trees draped in Spanish moss
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Wildlife viewing opportunities
-                            </li>
-                        </ul>
-                    </div>
                 </div>
+            </div>
 
-                <!-- River Trail -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <h3 class="text-xl font-semibold text-green-900">River Trail</h3>
-                        <div class="flex items-center gap-4 mt-2 md:mt-0">
-                            <span class="text-green-700">Difficulty: Easy</span>
+            <!-- River Trail -->
+            <div class="bg-green-50 rounded-lg shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:flex-shrink-0">
+                        <img class="h-48 w-full object-cover md:w-48" src="images/river-trail.jpg" alt="River Trail">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-green-900">River Trail</h3>
+                        <p class="mt-2 text-green-700">A scenic trail along the marsh edge offering excellent wildlife viewing opportunities.</p>
+                        <div class="mt-4">
+                            <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-800 mr-2">Nature</span>
+                            <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-800">Moderate</span>
                         </div>
                     </div>
-                    <p class="text-green-800 mb-6">A short walk along the water's edge between Dungeness Dock and Sea Camp, offering scenic views of the marsh and river.</p>
-                    <div>
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Trail Highlights</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Marsh views
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Bird watching opportunities
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Connects Dungeness Dock to Sea Camp
-                            </li>
-                        </ul>
-                    </div>
                 </div>
+            </div>
 
-                <!-- Nightingale Trail -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <h3 class="text-xl font-semibold text-green-900">Nightingale Trail</h3>
-                        <div class="flex items-center gap-4 mt-2 md:mt-0">
-                            <span class="text-green-700">Difficulty: Easy to Moderate</span>
+            <!-- Nightingale Trail -->
+            <div class="bg-green-50 rounded-lg shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:flex-shrink-0">
+                        <img class="h-48 w-full object-cover md:w-48" src="images/nightingale.jpg" alt="Nightingale Trail">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-green-900">Nightingale Trail</h3>
+                        <p class="mt-2 text-green-700">A peaceful trail through maritime forest leading to beautiful beach access.</p>
+                        <div class="mt-4">
+                            <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-800 mr-2">Nature</span>
+                            <span class="inline-block bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-800">Easy</span>
                         </div>
                     </div>
-                    <p class="text-green-800 mb-6">Provides views from within the maritime forest, offering a peaceful walk through the island's interior.</p>
-                    <div>
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Trail Highlights</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Maritime forest views
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Wildlife viewing
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Shaded walking path
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Parallel Trail to Little Greyfield Road -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <h3 class="text-xl font-semibold text-green-900">Parallel Trail to Little Greyfield Road</h3>
-                        <div class="flex items-center gap-4 mt-2 md:mt-0">
-                            <span class="text-green-700">Difficulty: Moderate</span>
-                        </div>
-                    </div>
-                    <p class="text-green-800 mb-6">A walk through the trees, across the dunes, and back down the beach, offering diverse landscapes and views.</p>
-                    <div>
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Trail Highlights</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Forest and dune ecosystems
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Beach access
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Diverse wildlife viewing
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Hiking the Southend -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-green-900 mb-6">Hiking the Southend</h2>
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <p class="text-green-800 mb-4">This area allows visitors to experience oak trees draped in Spanish moss, the Dungeness Historic District, boardwalks over marsh and sand dunes, and stretches of undeveloped beach. Several intersecting trails and roads are present; a map and trail signs help in navigation.</p>
-                <div class="mt-4">
-                    <h3 class="text-lg font-medium text-green-900 mb-3">Amenities</h3>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Four restrooms with drinking fountains
-                        </li>
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Trail maps and signs for navigation
-                        </li>
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Boardwalks over marsh and sand dunes
-                        </li>
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Beach access points
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Hiking the Northend and Wilderness -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-green-900 mb-6">Hiking the Northend and Wilderness</h2>
-            <div class="bg-white rounded-lg shadow-md p-6">
-                <p class="text-green-800 mb-4">Hiking north on the Parallel Trail or Main Park Road takes visitors through live oak canopies, palmetto forests, pine stands, open fields, tidal creeks, freshwater wetlands, and lakes. The Wilderness boundary is 5 miles north of the Sea Camp dock and is best explored when camping or private boating.</p>
-                <div class="mt-4">
-                    <h3 class="text-lg font-medium text-green-900 mb-3">Important Information</h3>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Drinking water available at Stafford Beach Campground and Plum Orchard Mansion
-                        </li>
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Other water sources require treatment
-                        </li>
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Remote area requires adequate preparation
-                        </li>
-                        <li class="flex items-start gap-2 text-green-700">
-                            <span class="text-green-600">•</span>
-                            Inform someone of your itinerary before hiking
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Additional Activities -->
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold text-green-900 mb-6">Additional Activities</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Guided Tours -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Guided Tours</h3>
-                    <p class="text-green-800 mb-4">Daily ranger-led tours, such as the Footsteps Tour at 10:00 AM, explore the Dungeness Historic District and provide insights into the island's history and ecology.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Tour Information</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Footsteps Tour at 10:00 AM
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Led by park rangers
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Explore Dungeness Historic District
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Swimming & Beachcombing -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Swimming & Beachcombing</h3>
-                    <p class="text-green-800 mb-4">The island's pristine beaches offer opportunities to cool off in the ocean and search for shells along the shoreline.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Beach Activities</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Ocean swimming
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Shell collecting
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Beach walking
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Biking -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Biking</h3>
-                    <p class="text-green-800 mb-4">A great way to explore the island; bikes are available for rent at the Sea Camp Dock on a first-come, first-served basis.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Biking Information</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Bikes available for rent at Sea Camp Dock
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                First-come, first-served basis
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Great for exploring the island's trails
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Kids & Youth Programs -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Kids & Youth Programs</h3>
-                    <p class="text-green-800 mb-4">Junior Ranger activity booklets are available for ages 5-7 and 8-12, providing educational activities for young visitors.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Program Information</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Junior Ranger booklets for ages 5-7
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Junior Ranger booklets for ages 8-12
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Educational activities for young visitors
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Hunting -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Hunting</h3>
-                    <p class="text-green-800 mb-4">Managed hunts are hosted annually; information on dates, regulations, and registration is available from the National Park Service.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Hunting Information</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Managed hunts hosted annually
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Registration required
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Check NPS website for dates and regulations
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Boating & Kayaking -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Boating & Kayaking</h3>
-                    <p class="text-green-800 mb-4">Visitors can journey to the island via private boat or kayak; proper preparation is advised for a safe and enjoyable experience.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Boating Information</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Private boat access available
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Kayaking opportunities
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Proper preparation recommended
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Stargazing -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Stargazing</h3>
-                    <p class="text-green-800 mb-4">The beach or fields at night offer displays of the Eastern sky, providing excellent opportunities for stargazing.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Stargazing Information</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Beach stargazing
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Field stargazing
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Eastern sky views
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Fishing -->
-                <div class="trail-card bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
-                    <h3 class="text-xl font-semibold text-green-900 mb-4">Fishing</h3>
-                    <p class="text-green-800 mb-4">Fishing opportunities are available throughout the island; visitors should check regulations and guidelines before fishing.</p>
-                    <div class="mt-4">
-                        <h4 class="text-lg font-medium text-green-900 mb-3">Fishing Information</h4>
-                        <ul class="grid grid-cols-1 gap-2">
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Check regulations before fishing
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Various fishing locations available
-                            </li>
-                            <li class="flex items-start gap-2 text-green-700">
-                                <span class="text-green-600">•</span>
-                                Follow NPS guidelines
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-12 bg-yellow-50 border-l-4 border-yellow-400 p-4">
-            <div class="flex">
-                <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+        <!-- Safety Tips -->
+        <div class="mt-12 bg-green-50 rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-green-900 mb-4">Trail Safety Tips</h2>
+            <ul class="space-y-2 text-green-700">
+                <li class="flex items-start">
+                    <svg class="w-5 h-5 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                </div>
-                <div class="ml-3">
-                    <h3 class="text-sm font-medium text-yellow-800">Trail Safety Tips</h3>
-                    <div class="mt-2 text-sm text-yellow-700">
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Always carry plenty of water and snacks</li>
-                            <li>Wear appropriate footwear and clothing</li>
-                            <li>Be aware of your surroundings and watch for wildlife</li>
-                            <li>Stay on marked trails to protect the environment</li>
-                            <li>Check weather conditions before starting your hike</li>
-                            <li>Let someone know your hiking plans</li>
-                            <li>For northend hiking, prepare adequately and inform others of your itinerary</li>
-                            <li>Treat water from natural sources before drinking</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                    <span>Stay on marked trails to protect fragile ecosystems</span>
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-5 h-5 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Bring plenty of water and snacks</span>
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-5 h-5 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Wear appropriate footwear and clothing</span>
+                </li>
+                <li class="flex items-start">
+                    <svg class="w-5 h-5 mr-2 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Be aware of wildlife and maintain safe distances</span>
+                </li>
+            </ul>
         </div>
     </main>
 
     <!-- Footer -->
     <footer class="bg-green-800 text-white mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div class="text-center text-green-200">
-                <p>© <script>document.write(new Date().getFullYear())</script> Cumberland Island Visitor Guide by Emerson Meade</p>
-                <p class="mt-2 text-sm">This is an unofficial guide. Not affiliated with the National Park Service.</p>
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <p>&copy; 2024 Cumberland Island Visitor Guide. Created by Emerson Meade.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Add active class to current navigation link
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href === currentPath) {
-                    link.classList.add('active');
-                }
-            });
+        // Initialize the map
+        const map = L.map('trailMap').setView([30.8516, -81.4412], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add trail markers
+        const trails = [
+            { name: 'Dungeness Historic District', coords: [30.8516, -81.4412] },
+            { name: 'River Trail', coords: [30.8616, -81.4512] },
+            { name: 'Nightingale Trail', coords: [30.8416, -81.4312] }
+        ];
+
+        trails.forEach(trail => {
+            L.marker(trail.coords)
+                .bindPopup(trail.name)
+                .addTo(map);
         });
 
-        // Modal functionality
-        const modal = document.getElementById('imageModal');
-        const modalImage = document.getElementById('modalImage');
+        // Fullscreen functionality
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const mapContainer = document.querySelector('.map-container');
 
-        function openModal(imageSrc, imageAlt) {
-            modal.classList.add('active');
-            modalImage.src = imageSrc;
-            modalImage.alt = imageAlt;
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-        }
-
-        function closeModal() {
-            modal.classList.remove('active');
-            modalImage.src = '';
-            modalImage.alt = '';
-            document.body.style.overflow = ''; // Restore scrolling
-        }
-
-        // Close modal when clicking outside the image
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        // Close modal with escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                mapContainer.requestFullscreen();
+                mapContainer.classList.add('fullscreen-map');
+            } else {
+                document.exitFullscreen();
+                mapContainer.classList.remove('fullscreen-map');
             }
         });
     </script>
